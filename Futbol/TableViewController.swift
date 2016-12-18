@@ -83,7 +83,7 @@ class TableViewController: UITableViewController {
     
     func foto(strUrl: String?, cell: ClasificationCell, indexPath: IndexPath){
         
-        cell.escudo?.image = nil
+        cell.escudo?.image = #imageLiteral(resourceName: "reloj-de-arena-10375")
         
         if let str = strUrl {
             

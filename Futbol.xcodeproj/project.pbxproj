@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6EAF5CC81E05A94900FFB17B /* InfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EAF5CC71E05A94900FFB17B /* InfoVC.swift */; };
+		6EAF5CCA1E05C1E300FFB17B /* JugadorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EAF5CC91E05C1E300FFB17B /* JugadorVC.swift */; };
 		EB10DF2D1E02FC5F003CA02F /* ClasificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB10DF2C1E02FC5F003CA02F /* ClasificationCell.swift */; };
 		EB10DF2F1E030AC8003CA02F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB10DF2E1E030AC8003CA02F /* ViewController.swift */; };
 		EB10DF311E030FB5003CA02F /* PlantillaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB10DF301E030FB5003CA02F /* PlantillaCell.swift */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6EAF5CC71E05A94900FFB17B /* InfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoVC.swift; sourceTree = "<group>"; };
+		6EAF5CC91E05C1E300FFB17B /* JugadorVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JugadorVC.swift; sourceTree = "<group>"; };
 		EB10DF2C1E02FC5F003CA02F /* ClasificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClasificationCell.swift; sourceTree = "<group>"; };
 		EB10DF2E1E030AC8003CA02F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EB10DF301E030FB5003CA02F /* PlantillaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantillaCell.swift; sourceTree = "<group>"; };
@@ -64,11 +68,13 @@
 			children = (
 				EBDB2A801E005F51005AE5F8 /* AppDelegate.swift */,
 				EBDB2A841E005F51005AE5F8 /* Main.storyboard */,
+				6EAF5CC91E05C1E300FFB17B /* JugadorVC.swift */,
 				EB10DF301E030FB5003CA02F /* PlantillaCell.swift */,
 				EB10DF2E1E030AC8003CA02F /* ViewController.swift */,
 				EB10DF2C1E02FC5F003CA02F /* ClasificationCell.swift */,
 				EBDB2A921E005FDF005AE5F8 /* TableViewController.swift */,
 				EB10DF321E031044003CA02F /* PlantillaTableVC.swift */,
+				6EAF5CC71E05A94900FFB17B /* InfoVC.swift */,
 				EBDB2A871E005F51005AE5F8 /* Assets.xcassets */,
 				EBDB2A891E005F51005AE5F8 /* LaunchScreen.storyboard */,
 				EBDB2A8C1E005F51005AE5F8 /* Info.plist */,
@@ -151,6 +157,8 @@
 				EB10DF2D1E02FC5F003CA02F /* ClasificationCell.swift in Sources */,
 				EB10DF331E031044003CA02F /* PlantillaTableVC.swift in Sources */,
 				EBDB2A931E005FDF005AE5F8 /* TableViewController.swift in Sources */,
+				6EAF5CC81E05A94900FFB17B /* InfoVC.swift in Sources */,
+				6EAF5CCA1E05C1E300FFB17B /* JugadorVC.swift in Sources */,
 				EB10DF311E030FB5003CA02F /* PlantillaCell.swift in Sources */,
 				EB10DF2F1E030AC8003CA02F /* ViewController.swift in Sources */,
 				EBDB2A811E005F51005AE5F8 /* AppDelegate.swift in Sources */,

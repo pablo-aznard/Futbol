@@ -13,6 +13,7 @@ class PlantillaCell: UITableViewCell {
     @IBOutlet weak var dorsal: UILabel!
     @IBOutlet weak var foto: UIImageView!
     @IBOutlet weak var nombre: UILabel!
+    @IBOutlet weak var posicion: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

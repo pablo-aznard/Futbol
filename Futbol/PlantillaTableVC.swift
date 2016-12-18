@@ -11,8 +11,9 @@ import UIKit
 class PlantillaTableVC: UITableViewController {
     
     var url = ""
-    var model = [[String:String]]()
+    var model = [[String:Any]]()
     var cache = [String:UIImage]()
+    var index = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,10 +38,9 @@ class PlantillaTableVC: UITableViewController {
                 if let data = try? Data(contentsOf: url){
                     if let arr = (try? JSONSerialization.jsonObject(with: data)) as? [String:[String:Any]]{
                         let nestedArr = arr["team"]
-                        if let squad = nestedArr?["squad"] as? [[String:String]]{
+                        if let squad = nestedArr?["squad"] as? [[String:Any]]{
                             DispatchQueue.main.async {
                                 self.model = squad
-                                print(self.model.count)
                                 self.tableView.reloadData()
                             }
                         }
@@ -65,9 +65,78 @@ class PlantillaTableVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "pc", for: indexPath) as! PlantillaCell
-        let nombre = model[indexPath.row]["nick"]
+        
+        let nombre = model[indexPath.row]["nick"] as? String
+        var dorsal = model[indexPath.row]["squadNumber"] as? String
+        let foto = model[indexPath.row]["image"] as? String
+        let posicion = model[indexPath.row]["role"] as? String
+        
+        if(dorsal == nil){
+            dorsal = "-"
+        }
+        
         cell.nombre.text = nombre
+        cell.dorsal.text = dorsal
+        cell.posicion.text = posicionJugador(posicion: posicion!)
+        
+        descargaFoto(strUrl: foto, cell: cell, indexPath: indexPath)
+        
         return cell
+    }
+    
+    func posicionJugador(posicion: String) -> String{
+        switch posicion {
+        case "1":
+            return "Portero"
+        case "2":
+            return "Defensa"
+        case "3":
+            return "Centrocampista"
+        case "4":
+            return "Delantero"
+        default:
+            return ""
+        }
+    }
+    
+    func descargaFoto(strUrl: String?, cell: PlantillaCell, indexPath: IndexPath){
+        
+        cell.foto?.image = #imageLiteral(resourceName: "reloj-de-arena-10375")
+        
+        if let str = strUrl {
+            
+            if let img = cache[str] {
+                cell.foto?.image = img
+            } else {
+                DispatchQueue.global().async {
+                    if let url = URL(string: str),
+                        let data = try? Data(contentsOf: url),
+                        let img = UIImage(data:data){
+                        
+                        DispatchQueue.main.async {
+                            self.cache[str] = img
+                            self.tableView.reloadRows(at: [indexPath], with: .fade)
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "Info" {
+            if let ivc = segue.destination as? InfoVC{
+                ivc.url = url
+            }
+        }
+        if segue.identifier == "jugador" {
+            if let jvc = segue.destination as? JugadorVC, let index = tableView.indexPathForSelectedRow {
+                let id = model[index.row]["id"] as? String
+                jvc.url = "http://apiclient.resultados-futbol.com/scripts/api/api.php?key=5677e7b48996414c8d26d688eda421be&tz=Europe/Madrid&format=json&req=player&id=" + id!
+            }
+        }
     }
     
 
