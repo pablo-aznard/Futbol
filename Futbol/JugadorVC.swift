@@ -41,7 +41,12 @@ class JugadorVC: UIViewController {
         if let url = URL(string: url) {
             let q = DispatchQueue.global()
             q.async {
-                if let data = try? Data(contentsOf: url){
+                do{
+                    let data = try Data(contentsOf: url)
+                    if data.description == "10 bytes" {
+                        self.alert()
+                        return
+                    }
                     if let arr = (try? JSONSerialization.jsonObject(with: data)) as? [String:Any]{
                         if let avatar = arr["player_avatar"] as? String{
                             DispatchQueue.main.async {
@@ -92,9 +97,26 @@ class JugadorVC: UIViewController {
                             }
                         }
                     }
+                }catch{
+                    self.alert()
                 }
             }
+        }else{
+            alert()
         }
+    }
+    
+    func alert(){
+        DispatchQueue.main.async {
+            let alert = UIAlertController(
+                title: "Error",
+                message: "No se ha podido establecer conexión con el servidor",
+                preferredStyle: .alert)
+            
+            self.present(alert, animated: true)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+        }
+        
     }
     
     func descargaFoto(strUrl: String?, imageView: UIImageView){

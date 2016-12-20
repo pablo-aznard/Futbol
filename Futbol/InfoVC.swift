@@ -40,7 +40,12 @@ class InfoVC: UIViewController {
         if let url = URL(string: url) {
             let q = DispatchQueue.global()
             q.async {
-                if let data = try? Data(contentsOf: url){
+                do{
+                    let data = try Data(contentsOf: url)
+                    if data.description == "10 bytes" {
+                        self.alert()
+                        return
+                    }
                     if let arr = (try? JSONSerialization.jsonObject(with: data)) as? [String:[String:Any]]{
                         let nestedArr = arr["team"]
                         if let manager = nestedArr?["managerNow"] as? String{
@@ -85,10 +90,28 @@ class InfoVC: UIViewController {
                                 self.foto(strUrl: self.imgUrl2, imageView: self.escudo)
                             }
                         }
+                    
                     }
+                }catch{
+                    self.alert()
                 }
             }
+        }else{
+            alert()
         }
+    }
+    
+    func alert(){
+        DispatchQueue.main.async {
+            let alert = UIAlertController(
+                title: "Error",
+                message: "No se ha podido establecer conexión con el servidor",
+                preferredStyle: .alert)
+            
+            self.present(alert, animated: true)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+        }
+        
     }
     
     func foto(strUrl: String?, imageView: UIImageView){

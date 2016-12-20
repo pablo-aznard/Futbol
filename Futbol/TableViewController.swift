@@ -11,13 +11,11 @@ import UIKit
 class TableViewController: UITableViewController {
     
     let url = "http://apiclient.resultados-futbol.com/scripts/api/api.php?key=5677e7b48996414c8d26d688eda421be&tz=Europe/Madrid&format=json&req=tables&league=1&group=1"
-    
     var model = [[String:Any]]()
     var cache = [String:UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         download()
         
         // Uncomment the following line to preserve selection between presentations
@@ -36,18 +34,44 @@ class TableViewController: UITableViewController {
         if let url = URL(string: url) {
             let q = DispatchQueue.global()
             q.async {
-                if let data = try? Data(contentsOf: url){
+                do{
+                    let data = try Data(contentsOf: url)
+                    if data.description == "10 bytes" {
+                        self.alert()
+                        return
+                    }
                     if let arr = (try? JSONSerialization.jsonObject(with: data)) as? [String:[[String:Any]]]{
                         if let nestedArr = arr["table"] {
                             DispatchQueue.main.async {
-                                self.model = nestedArr
-                                self.tableView.reloadData()
+                                   self.model = nestedArr
+                                   self.tableView.reloadData()
                             }
                         }
                     }
                 }
+                catch{
+                    self.alert()
+                    return
+                }
             }
         }
+        else {
+            alert()
+        }
+    }
+            
+    
+    func alert(){
+        DispatchQueue.main.async {
+            let alert = UIAlertController(
+                title: "Error",
+                message: "No se ha podido establecer conexión con el servidor",
+                preferredStyle: .alert)
+            
+            self.present(alert, animated: true)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+        }
+
     }
     
     // MARK: - Table view data source
@@ -107,7 +131,6 @@ class TableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "plantilla" {
             if let ptvc = segue.destination as? PlantillaTableVC,
                 let ip = tableView.indexPathForSelectedRow {
